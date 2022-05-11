@@ -45,6 +45,11 @@ def portfolio(get_price = get_price):
     """
     return render_template("portfolio.html", get_price=get_price,user=current_user)
 
+@views.route('/performance', methods=['GET'])
+@login_required
+def performance():
+    pass
+
 @views.route('/delete-stock', methods=['POST'])
 def delete_stock():
     """
