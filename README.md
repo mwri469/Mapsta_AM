@@ -7,6 +7,8 @@ This project is still a work in progress.
 For this website to work, you will need to create a finnhub account to get an API key for the finnhub API:
 https://finnhub.io/dashboard
 
+Uses a Flask framework, with mongoDB and SQL Alchemy for backend.
+
 ## Usage
 
 Website will first require you to create an account:
