@@ -1,3 +1,8 @@
+"""
+    TODO : create performance page that applies matplotlib.pyplot to visualise a users performance.
+    TODO : Add performance header that displays the overall performance of a users portfolio.
+"""
+
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
 from .models import Stock
@@ -37,6 +42,18 @@ def get_price(ticker='AAPL'):
     finnhub_client = finnhub.Client(api_key="c9h8fjiad3iblo2fuab0")
     return finnhub_client.quote(ticker)
 
+def tot_perf(user):
+    """ Calculate a users total performance
+    """
+    finnhub_client = finnhub.Client(api_key="c9h8fjiad3iblo2fuab0") # Init finnhub API
+    perf = 0 # Performance sum
+    for stock in user.stocks:
+        curr_stock = finnhub_client.quote(stock)
+        curr_perf = stock.num_shares*(get_price(stock.ticker)['c'] - stock.b_price)
+        perf += curr_perf
+
+    return perf
+
 @views.route('/portfolio', methods=['GET'])
 @login_required
 def portfolio(get_price = get_price):
@@ -49,6 +66,7 @@ def portfolio(get_price = get_price):
 @login_required
 def performance():
     pass
+
 
 @views.route('/delete-stock', methods=['POST'])
 def delete_stock():
